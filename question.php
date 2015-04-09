@@ -2,6 +2,27 @@
 <html>
 <head>
 <title>Question</title>
+<script type ="text/javascript">
+function ans_poll() {
+ 	var ques = document.getElementsByName('question_text');
+	
+	var qid = ques[0].getAttribute('id');
+	var radios = document.getElementsByName(qid);
+	var ansid = "";
+	for (var i = 0; i < radios.length; i++ ) {
+ 		if(radios[i].checked) {
+ 			ansid = radios[i].value;
+ 		}
+	}
+	if (ansid) {
+		self.location = 'http://localhost/PlotSurvey/updatepoll.php?ansid='+ansid;
+	}	
+	else {
+		alert('select a choice!');
+	}
+}
+
+</script>
 </head>
 <?php
 /**
@@ -22,8 +43,8 @@ function db_conn($dbhost, $dbuser, $dbpass) {
 
 
 /**
- * Assume the max id in questions table to be latest entry,
- * Use maxid to set foreign key in answers table
+ * returns max id in questions table to be latest entry,
+ * 
  *
  * @param unknown $conn
  */
@@ -40,7 +61,7 @@ function selectMaxId($conn) {
 
 /**
  * insert the data (question and answer) in corresponding tables
- *
+ * returns question id and list of answer ids
  * @param unknown $dbname
  * @param unknown $qtext
  * @param unknown $atext
@@ -57,22 +78,26 @@ function insertquestion($dbname, $qtext, $atextlist, $conn) {
 	}
 
 	// Get question id to set the foreign key of answers table
-	$qid = selectMaxId ( $conn );
-
+	$qid = mysql_insert_id($conn);
+	
 	// Insert into answers table
+	$ansidlist = array();
 	foreach ( $atextlist as $atext ) {
 		$sql = "INSERT INTO answers " . "(atext,quesid) " . "VALUES " . "('$atext',$qid)";
 		$retval = mysql_query ( $sql, $conn );
 		if (! $retval) {
 			die ( 'Could not enter data: ' . mysql_error () );
 		}
+		//Generate list of ids of answers
+		array_push($ansidlist, mysql_insert_id($conn));
 	}
-	return $qid;
+	return array($qid,$ansidlist);
 }
 // ----------------main-------------------
 $qtext = "";
 $qid = "";
 $atextlist = array();
+$ansidlist = array();
 // on POST request
 if (isset ( $_POST ['insertq'] )) {
 	$dbhost = 'localhost:3036';
@@ -81,7 +106,7 @@ if (isset ( $_POST ['insertq'] )) {
 	$dbname = 'CSE574';
 	
 	// Get data from the input text fields
-//	$conn = db_conn ( $dbhost, $dbuser, $dbpass );
+	$conn = db_conn ( $dbhost, $dbuser, $dbpass );
 	$qtext = $_POST ['inp_ques'];
 	$atext = $_POST ["inp_ans"];
 	
@@ -89,11 +114,10 @@ if (isset ( $_POST ['insertq'] )) {
 	$atextlist = explode ( ",", $atext );
 	
 	// Insert in database
-//	$qid = insertquestion ( $dbname, $qtext, $atextlist, $conn );
+	list($qid,$ansidlist) = insertquestion ( $dbname, $qtext, $atextlist, $conn );
 	
 	mysql_close ( $conn );
 }
-
 ?>
 	<body>
 	<div id='header'>
@@ -101,22 +125,25 @@ if (isset ( $_POST ['insertq'] )) {
 	</div>
 
 	<div id="question">
-		<form name="question_form" action="graph.php" method="POST">
+		<form name="question_form" action="poll.php" method="POST">
 			<table class="question_tb">
 				<tr>
 					<td><span>Question </span></td>
-					<td><div id='question_text'><?php if(isset($qText)){ echo $qText; } ?></div></td>
+					<td><div name='question_text'<?php echo " id='$qid'>"; 
+					if(isset($qtext)){ echo $qtext; } ?></div></td>
 				</tr>
 				<?php
 				// List all the answers as radio buttons
 				$i = 0; 
 				foreach ($atextlist as $atext) {
-					echo "<tr><td><input type='radio' name='$qid' value='$i'>$atext</input></td></tr>";
+					echo "<tr><td><input type='radio' name='$qid' value='$ansidlist[$i]'>$atext</input></td></tr>";
+					$i = $i + 1;
 				}
 				?>
 				<tr>
-					<td colspan="2" align="right"><input type="button" value="submit"
-						onclick="submitResponse();" /></td>
+					<td>
+					<input type="button" name="poll" value="Poll" onclick="ans_poll();"/></td>
+					<td><input type="submit" name="plot" value="Plot" /> <td>
 				</tr>
 			</table>
 		</form>

@@ -36,6 +36,7 @@ function create_tables($dbname, $conn) {
 			"aid INT NOT NULL AUTO_INCREMENT, ".
 			"atext VARCHAR(200) NOT NULL, ".
 			"quesid INT, ".
+			"pollval INT DEFAULT 0, ".
 			"PRIMARY KEY (aid)); ";
 	$retval = mysql_query($sql, $conn);
 	if ( ! $retval ) {
