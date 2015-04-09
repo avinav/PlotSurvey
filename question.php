@@ -108,25 +108,12 @@ if (isset ( $_POST ['insertq'] )) {
 					<td><div id='question_text'><?php if(isset($qText)){ echo $qText; } ?></div></td>
 				</tr>
 				<?php
+				// List all the answers as radio buttons
 				$i = 0; 
 				foreach ($atextlist as $atext) {
 					echo "<tr><td><input type='radio' name='$qid' value='$i'>$atext</input></td></tr>";
 				}
 				?>
-				<!-- 
-				<tr>				
-					<td><input type="radio" name="ans" value="ans1">1</input></td>
-				</tr>
-				<tr>
-					<td><input type="radio" name="ans" value="ans2" />2</td>
-				</tr>
-				<tr>
-					<td><input type="radio" name="ans" value="ans3" />3</td>
-				</tr>
-				<tr>
-					<td><input type="radio" name="ans" value="ans4" />4</td>
-				</tr>
-				-->
 				<tr>
 					<td colspan="2" align="right"><input type="button" value="submit"
 						onclick="submitResponse();" /></td>
