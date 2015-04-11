@@ -4,40 +4,38 @@
 </head>
 <?php
 /**
- * 
- * @param unknown $conn
- * @param unknown $uid
+ *
+ * @param unknown $conn        	
+ * @param unknown $uid        	
  */
 function check_password($conn, $inpUid, $inpPass) {
-	$sql = "SELECT pass from users ".
-			"WHERE uname = '$inpUid';";
-	$retval = mysql_query($sql, $conn);
-	if ( ! $retval) {
-		echo "Incorrect userid: ". mysql_error();
+	$sql = "SELECT pass from users " . "WHERE uname = '$inpUid';";
+	$retval = mysql_query ( $sql, $conn );
+	if (! $retval) {
+		echo "Incorrect userid: " . mysql_error ();
 	}
-	$row = mysql_fetch_array($retval);
-	$pass = $row[0];
+	$row = mysql_fetch_array ( $retval );
+	$pass = $row [0];
 	if ($pass == $inpPass) {
 		return True;
-	}
-	else {
+	} else {
 		echo "Password Incorrect!";
 	}
 	return False;
 }
-//--------------------main ----------------------
+// --------------------main ----------------------
 
-if (isset($_POST['login'])) {
+if (isset ( $_POST ['login'] )) {
+	session_start();
+	
 	include 'db_connect.php';
-	mysql_select_db($dbname);
-	$uid = $_POST['uid'];
-	$pass = $_POST['pid'];
-	if (check_password($conn, $uid, $pass)) {
+	mysql_select_db ( $dbname );
+	$uid = $_POST ['uid'];
+	$pass = $_POST ['pid'];
+	if (check_password ( $conn, $uid, $pass )) {
 		$loggedin = True;
-		echo "logged in";
-	}
-	else {
-		echo "not logged in";
+		$_SESSION['logged'] = True;
+	} else {
 	}
 }
 
@@ -63,13 +61,8 @@ if (isset($_POST['login'])) {
 			</div>
 		</form>
 		<div id='poll'>
-			<a href='./question.php'>Poll</a>
+			<span>Students: </span><a href='./question.php'>Poll</a>
 		</div>
-	</div>
-	<div id='question_page' <?php if(!isset(loggedin)) { echo " style='display: none;'"; } ?>
-	
-	
-	
 	</div>
 </body>
 </html>

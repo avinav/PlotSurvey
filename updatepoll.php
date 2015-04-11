@@ -16,6 +16,7 @@ if (isset($_GET['ansid'])) {
 	if ( ! $retval ) {
 		die ( 'update error: ' . mysql_error () );
 	}
+	session_start();
 	$_SESSION['voted'] = 'YES';
 	mysql_close( $conn );
 }
