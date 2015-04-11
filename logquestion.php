@@ -2,11 +2,12 @@
 <head>
 <title>Insert questions</title>
 </head>
+<?php include 'db_insert_question.php';?>
 <body>
 	<h1>Welcome!</h1>
 	<div id='qform'
-		<?php //if (isset($_POST['insertq'])){ echo ' style="display:none;"'; } ?>>
-		<form name="question_form" action="question.php" method="POST">
+		<?php if (isset($_POST['insertq'])){ echo ' style="display:none;"'; } ?>>
+		<form name="question_form" action="<?php echo $_SERVER['PHP_SELF']?>" method="POST">
 			<table>
 				<tr>
 					<td><span>Enter Question:</span></td>
@@ -19,10 +20,10 @@
 				</tr>
 				<tr>
 					<td><input type='submit' name='insertq' value='Submit' /></td>
-			
+				
 			</table>
 		</form>
 	</div>
-	<?php // if(isset($_POST['insertq'])) { echo "<div id='qres'>Insert successfull!</div>"; }?>
+	<?php  if(isset($_POST['insertq'])) { echo "<div id='qres'>Insert successfull!</div>"; }?>
 	</body>
 </html>
