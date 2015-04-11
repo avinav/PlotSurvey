@@ -35,6 +35,7 @@ if (isset ( $_POST ['login'] )) {
 	if (check_password ( $conn, $uid, $pass )) {
 		$loggedin = True;
 		$_SESSION['logged'] = True;
+		header("Location: ./logquestion.php");
 	} else {
 	}
 }
