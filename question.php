@@ -15,7 +15,7 @@ function ans_poll() {
  		}
 	}
 	if (ansid) {
-		self.location = 'http://localhost/PlotSurvey/updatepoll.php?ansid='+ansid;
+		self.location = './updatepoll.php?ansid='+ansid;
 	}	
 	else {
 		alert('select a choice!');
