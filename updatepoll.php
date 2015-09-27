@@ -25,6 +25,6 @@ if (isset($_GET['ansid'])) {
 <head>
 </head>
 <body>
-<div>Thanks for polling!</div>
+<div>Thanks for polling! Go back to <a href="./login.php">home</a></div>
 </body>
 </html>
