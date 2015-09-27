@@ -31,9 +31,10 @@ function ans_poll() {
 	include 'get_question_data.php';
 	?>		
 	<body>
-	<div id='header'>
-		<span style="font-size:28">Poll Survey</span>
+	<div id='header' style="text-align: center">
+		<span style="font-size: 2em">Poll Survey</span>
 	</div>
+	<hr>
 	<div id="question"
 	<?php if (isset($_SESSION['voted'])){ echo ' style="display:none;"'; } ?>>
 		<form name="question_form" action="poll.php" method="POST">
@@ -47,7 +48,7 @@ function ans_poll() {
 				// List all the answers as radio buttons
 				$i = 0; 
 				foreach ($atextlist as $atext) {
-					echo "<tr><td><input type='radio' name='$qid' value='$aidlist[$i]'>$atext</input></td></tr>";
+					echo "<tr><td></td><td><input type='radio' name='$qid' value='$aidlist[$i]'>$atext</input></td></tr>";
 					$i = $i + 1;
 				}
 				?>
