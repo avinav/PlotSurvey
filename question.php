@@ -32,14 +32,14 @@ function ans_poll() {
 	?>		
 	<body>
 	<div id='header'>
-		<h1>Poll Survey</h1>
+		<span style="font-size:28">Poll Survey</span>
 	</div>
 	<div id="question"
 	<?php if (isset($_SESSION['voted'])){ echo ' style="display:none;"'; } ?>>
 		<form name="question_form" action="poll.php" method="POST">
-			<table class="question_tb">
+			<table class="question_tb" align="center">
 				<tr>
-					<td><span>Question </span></td>
+					<td><span>Question: </span></td>
 					<td><div name='question_text'<?php echo " id='$qid'>"; 
 					if(isset($qtext)){ echo $qtext; } ?></div></td>
 				</tr>
