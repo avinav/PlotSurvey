@@ -31,7 +31,7 @@ function check_password($conn, $inpUid, $inpPass) {
 if (isset ( $_POST ['login'] )) {
 	session_start();
 	
-	include 'db_connect.php';
+// 	include 'db_connect.php';
 // 	mysql_select_db ( $dbname );
 	$uid = $_POST ['uid'];
 	$pass = $_POST ['pid'];
