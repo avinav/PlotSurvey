@@ -54,7 +54,6 @@ function ans_poll() {
 				<tr>
 					<td>
 					<input type="button" name="poll" value="Poll" onclick="ans_poll();"/></td>
-					<td><input type="submit" name="plot" value="Plot" /> <td>
 				</tr>
 			</table>
 		</form>

@@ -3,11 +3,14 @@
 <title>Login</title>
 </head>
 <?php
+require 'db_connect.php';
+require 'functions.php';
 /**
  *
  * @param unknown $conn        	
  * @param unknown $uid        	
  */
+
 function check_password($conn, $inpUid, $inpPass) {
 	$sql = "SELECT pass from users " . "WHERE uname = '$inpUid';";
 	$retval = mysql_query ( $sql, $conn );
@@ -29,12 +32,13 @@ if (isset ( $_POST ['login'] )) {
 	session_start();
 	
 	include 'db_connect.php';
-	mysql_select_db ( $dbname );
+// 	mysql_select_db ( $dbname );
 	$uid = $_POST ['uid'];
 	$pass = $_POST ['pid'];
 	if (check_password ( $conn, $uid, $pass )) {
 		$loggedin = True;
 		$_SESSION['logged'] = True;
+		$_SESSION['user'] = $uid;
 		header("Location: ./logquestion.php");
 	} else {
 	}
@@ -42,11 +46,13 @@ if (isset ( $_POST ['login'] )) {
 
 ?>
 <body>
+<br><br><br><br><br><br><br>
 	<div id='login_page'
 		<?php if(isset($loggedin)) { echo ' style="display:none;"';}?>>
 		<form method='POST' action=<?php echo $_SERVER['PHP_SELF']?>>
-			<div id='login'>
-				<table>
+			<div id='login' style="text-align: right;width: 45%;float:left;">
+			<span style="font-size: 24">Login to create a Poll</span><br><br>
+				<table align="right">
 					<tr>
 						<td><span>User: </span></td>
 						<td><input type='text' id='uid' name='uid' /></td>
@@ -61,8 +67,11 @@ if (isset ( $_POST ['login'] )) {
 				</table>
 			</div>
 		</form>
-		<div id='poll'>
-			<span>Students: </span><a href='./question.php'>Poll</a>
+		<div id='poll' style="text-align: left;width:45%;float:right;">
+		<br><br>
+			<span style="font-size: 20"><a href='./question.php'>Take Poll</a></span>
+			&nbsp;|&nbsp;<span style="font-size: 20"><a href=<?php $active_qid = get_active_question($conn);
+						 echo "'./displayplot.php?qid=$active_qid'";?>>View Poll Result</a></span>
 		</div>
 	</div>
 </body>

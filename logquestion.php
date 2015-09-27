@@ -2,19 +2,24 @@
 <head>
 <title>Insert questions</title>
 </head>
-<?php include 'db_insert_question.php'; session_start()?>
+<?php 
+require "db_connect.php";
+require "functions.php";
+include 'db_insert_question.php'; 
+session_start()?>
 
 <body>
 		<div id=loggedin
 		<?php if (!(isset($_SESSION) && isset($_SESSION['logged']))) {echo "style='display:none';";}?>>
-		<h1>Welcome!</h1>
+		<span style="font-size: 20">Welcome <?=$_SESSION['user']?>!</span>
 		<div id='qform'
 			<?php if (isset($_POST['insertq'])){ echo ' style="display:none;"'; } ?>>
 			<form name="question_form" action="<?php echo $_SERVER['PHP_SELF']?>"
 				method="POST">
-				<table>
+				<br><br><br>
+				<table align="center">
 					<tr>
-						<td><span>Enter Question:</span></td>
+						<td><span>Enter New Question:</span></td>
 						<td><textarea id='inp_ques' name='inp_ques' rows='4' cols='50'
 								maxlength='200'></textarea></td>
 					</tr>
@@ -24,13 +29,16 @@
 					</tr>
 					<tr>
 						<td><input type='submit' name='insertq' value='Submit' /></td>
+						<td><span><a href=<?php $active_qid = get_active_question($conn);
+						 echo "'./displayplot.php?qid=$active_qid'";?>>View
+					Result</a></span></td>
 				
 				</table>
 			</form>
 		</div>
 		<div id='inserted'
 			<?php  if(!isset($_POST['insertq'])) { echo " style='display: none;'"; }?>>
-			<span>Insert Succesfull! </span> <span><a href='./displayplot.php'>View
+			<span>Question added! </span> <span><a href=<?php echo "'./displayplot.php?qid=$qid'"?>>View
 					Result</a></span>
 		</div>
 	</div>

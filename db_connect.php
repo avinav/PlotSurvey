@@ -3,9 +3,9 @@
 /**
  * set up database connection
  *
- * @param unknown $dbhost
- * @param unknown $dbuser
- * @param unknown $dbpass
+ * @param $dbhost
+ * @param $dbuser
+ * @param $dbpass
  * @return resource
  */
 function db_conn($dbhost, $dbuser, $dbpass) {
@@ -22,5 +22,5 @@ $dbpass = 'oxford';
 $dbname = 'CSE574';
 
 $conn = db_conn ( $dbhost, $dbuser, $dbpass );
-
+mysql_select_db ( $dbname );
 ?>
