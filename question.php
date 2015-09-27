@@ -40,9 +40,9 @@ function ans_poll() {
 		<form name="question_form" action="poll.php" method="POST">
 			<table class="question_tb" align="center">
 				<tr>
-					<td><span>Question: </span></td>
-					<td><div name='question_text'<?php echo " id='$qid'>"; 
-					if(isset($qtext)){ echo $qtext; } ?></div></td>
+					<td><b><span>Question: </span></b></td>
+					<td><b><div name='question_text'<?php echo " id='$qid'>"; 
+					if(isset($qtext)){ echo $qtext; } ?></div></b></td>
 				</tr>
 				<?php
 				// List all the answers as radio buttons
