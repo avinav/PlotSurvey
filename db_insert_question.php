@@ -68,7 +68,7 @@ $ansidlist = array();
 if (isset ( $_POST ['insertq'] )) {
 	
 	// returns $conn,$dbuser,$dbpass,$dbname,$dbhost
-	include 'db_connect.php';
+// 	include 'db_connect.php';
 	
 	// Get data from the input text fields
 	$qtext = $_POST ['inp_ques'];
