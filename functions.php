@@ -9,7 +9,8 @@ function get_active_question($conn) {
 	$sql = 'SELECT MAX(qid) AS `maxid` from active_questions;';
 	$retval = mysql_query ( $sql, $conn );
 	if (! $retval ) {
-		echo "<br>Could not get active qid: ". mysql_error();
+// 		echo "<br>Could not get active qid: ". mysql_error();
+		return -1;
 	}
 	$row = mysql_fetch_array ( $retval, MYSQL_NUM );
 	return $row[0];
